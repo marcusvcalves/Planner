@@ -1,0 +1,7 @@
+.navbar{
+    background-color: var(--purple-color) !important;
+}
+
+.nav-link{
+    font-size: 1.1rem !important;
+}
