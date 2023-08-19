@@ -4,4 +4,5 @@
 
 .nav-link{
     font-size: 1.1rem !important;
+    color: var(--white-color) !important;
 }
