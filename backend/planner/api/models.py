@@ -2,32 +2,30 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
 class AppUserManager(BaseUserManager):
-    def create_user(self, email, username, password):
+    def create_user(self, first_name, last_name, email, password):
         if not email:
             raise ValueError('An email is required.')
-        if not username:
-            raise ValueError('A username is required.')
         if not password:
             raise ValueError('A password is required.')
 
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username)
+        user = self.model(email=email, first_name=first_name, last_name=last_name)
         user.set_password(password)
         user.save()
 
         return user
 
-    def create_superuser(self, email, username, password):
+    def create_superuser(self, email, password):
         if not email:
             raise ValueError('An email is required.')
-        if not username:
-            raise ValueError('A username is required.')
         if not password:
             raise ValueError('A password is required.')
 
-        user = self.create_user(email, username, password)
+        email = self.normalize_email(email)
+        user = self.model(email=email)
+        user.set_password(password)
         user.is_superuser = True
-        user.is_staff = True  # Make superuser staff as well
+        user.is_staff = True
         user.save()
 
         return user
@@ -35,12 +33,22 @@ class AppUserManager(BaseUserManager):
     
 class AppUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
-    username = models.CharField(max_length=50)
+
     is_active = models.BooleanField(default=True)  # Required for AbstractBaseUser
     is_staff = models.BooleanField(default=False)  # Required for superuser
+
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
+    
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+
+    def get_name(self):
+        return self.first_name or self.email.split('@')[0]
     
     objects = AppUserManager()
     
