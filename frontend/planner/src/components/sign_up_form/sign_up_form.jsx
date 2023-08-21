@@ -20,7 +20,8 @@ import { Link } from "react-router-dom";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -29,8 +30,9 @@ export default function SignUpForm() {
 
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/register', {
+        first_name: firstName,
+        last_name: lastName,
         email: email,
-        username: username,
         password: password,
       });
       // Add code to handle successful registration, redirect, etc.
@@ -73,8 +75,32 @@ export default function SignUpForm() {
                 <TextField
                   required
                   fullWidth
+                  name="Nome"
+                  label="Nome"
+                  id="nome"
+                  autoComplete="nome"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="Sobrenome"
+                  label="Sobrenome"
+                  id="sobrenome"
+                  autoComplete="sobrenome"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                   value={email}
@@ -85,23 +111,11 @@ export default function SignUpForm() {
                 <TextField
                   required
                   fullWidth
-                  name="username"
-                  label="Username"
-                  id="username"
-                  autoComplete="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
                   name="password"
-                  label="Password"
+                  label="Senha"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
+                  autoComplete="nova-senha"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
