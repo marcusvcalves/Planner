@@ -22,8 +22,6 @@ import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
 
@@ -31,9 +29,7 @@ export default function LoginForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register', {
-        first_name: firstName,
-        last_name: lastName,
+      await axios.post('http://127.0.0.1:8000/api/login', {
         email: email,
         password: password,
       });
@@ -77,6 +73,8 @@ export default function LoginForm() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
               <Grid item xs={12}>
               </Grid>
@@ -89,6 +87,8 @@ export default function LoginForm() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
