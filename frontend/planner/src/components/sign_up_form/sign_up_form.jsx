@@ -53,7 +53,7 @@ export default function SignUpForm() {
                 </section>
             ) : (
     <ThemeProvider theme={createTheme()}>
-      <Container component="main" maxWidth="xs">
+      <Container className='signup_container' component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -63,11 +63,11 @@ export default function SignUpForm() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar className= 'lock' sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Cadastre-se
           </Typography>
           <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -124,19 +124,20 @@ export default function SignUpForm() {
               </Grid>
             </Grid>
             <Button
+              className='button'
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Cadastre-se
             </Button>
           </Box>
           <Box sx={{ mt: 3 }}>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/login" variant="body2">
-                  Already have an account? Sign in
+                  Já possui uma conta? Faça login
                 </Link>
               </Grid>
             </Grid>

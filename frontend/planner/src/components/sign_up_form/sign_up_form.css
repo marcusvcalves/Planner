@@ -8,3 +8,20 @@
 .button-link {
     color: var(--black-color) !important;
 }
+
+.signup_container {
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 auto !important;
+    min-height: calc(100vh - 64px) !important;
+    justify-content: center !important;
+}
+
+
+.lock {
+    background-color: var(--purple-color) !important;
+}
+
+.button {
+    margin-left: 16px !important;
+}
