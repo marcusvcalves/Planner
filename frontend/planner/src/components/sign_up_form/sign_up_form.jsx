@@ -79,6 +79,7 @@ export default function SignUpForm() {
                   label="Nome"
                   id="nome"
                   autoComplete="nome"
+                  autoFocus
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />

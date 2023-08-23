@@ -6,8 +6,9 @@ import Login from './templates/login';
 import ErrorPage from './templates/error_page';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { AuthProvider } from './context/AuthContext';
 
-
+import PrivateRoute from './utils/PrivateRoute'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +32,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

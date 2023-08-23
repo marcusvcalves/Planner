@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 
 import './login_form.css'
@@ -20,10 +20,15 @@ import '../../css/global.css'
 
 import { Link } from "react-router-dom";
 
+import AuthContext from '../../context/AuthContext'
+
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
+  let {user} = useContext(AuthContext)
+  let {loginUser} = useContext(AuthContext)
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +66,7 @@ export default function LoginForm() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={loginUser} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               
             <TextField
