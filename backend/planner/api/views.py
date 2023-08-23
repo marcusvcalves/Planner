@@ -6,6 +6,25 @@ from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerial
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_email, validate_password
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['first_name'] = user.first_name
+        token['last_name'] = user.last_name
+        token['email'] = user.email
+        # ...
+
+        return token
+    
+class MyTokenObtainPairView(TokenObtainPairView):
+	serializer_class = MyTokenObtainPairSerializer
 
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)
