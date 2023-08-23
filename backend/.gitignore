@@ -1,6 +1,5 @@
 *.cfg
 env
-*.ps1
 *.sqlite3
 __pycache__
 .env
