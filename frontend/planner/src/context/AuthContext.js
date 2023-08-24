@@ -7,10 +7,9 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({children}) => {
-    
+
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
-
 
     let loginUser = async (e) => {
         e.preventDefault();
@@ -22,19 +21,26 @@ export const AuthProvider = ({children}) => {
             },
             body: JSON.stringify({'email':  e.target.email.value, 'password': e.target.password.value})
         })
-        let data = await response.json()
-        console.log(data)
+        let data = await response.json();
+        
         
         if(response.status === 200){
-            setAuthTokens(data)
-            setUser(jwt_decode(data.access))
-            localStorage.setItem('authTokens', JSON.stringify(data))
+            setAuthTokens(data);
+            setUser(jwt_decode(data.access));
+            localStorage.setItem('authTokens', JSON.stringify(data));
         }
+    }
+
+    let logoutUser = async () => {
+        setAuthTokens(null);
+        setUser(null);
+        localStorage.removeItem('authTokens');
     }
     
     let contextData = {
         user:user,
-        loginUser:loginUser
+        loginUser:loginUser,
+        logoutUser:logoutUser
     }
 
     return (
