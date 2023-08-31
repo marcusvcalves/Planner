@@ -11,7 +11,7 @@ export const AuthProvider = ({children}) => {
     const refresh = () => window.location.reload(true);
     const navigate = useNavigate();
 
-    let loginUser = async (e) => {
+    let handleLogin = async (e) => {
         e.preventDefault();
         
         let response = await fetch('http://127.0.0.1:8000/api/token/', {
@@ -32,7 +32,7 @@ export const AuthProvider = ({children}) => {
         }
     }
 
-    let logoutUser = async () => {
+    let handleLogout = async () => {
         setAuthTokens(null);
         setUser(null);
         localStorage.removeItem('authTokens');
@@ -57,8 +57,8 @@ export const AuthProvider = ({children}) => {
     }
     let contextData = {
         user:user,
-        loginUser:loginUser,
-        logoutUser:logoutUser
+        handleLogin:handleLogin,
+        handleLogout:handleLogout
     }
 
     return (

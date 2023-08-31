@@ -28,7 +28,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
   let {user} = useContext(AuthContext)
-  let {loginUser} = useContext(AuthContext)
+  let {handleLogin} = useContext(AuthContext)
 
 
   const handleSubmit = async (e) => {
@@ -67,7 +67,7 @@ export default function LoginForm() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <Box component="form" onSubmit={loginUser} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               
             <TextField

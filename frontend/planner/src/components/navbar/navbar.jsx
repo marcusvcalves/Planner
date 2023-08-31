@@ -15,7 +15,7 @@ import './navbar.css';
 
 
 export default function ButtonAppBar() {
-  const {user, logoutUser} = useContext(AuthContext);
+  const {user, handleLogout} = useContext(AuthContext);
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function ButtonAppBar() {
           <Link to="/"><Button className="nav-link">Home</Button></Link>
           <Box sx={{ flexGrow: 1 }} />
           <Link to="/"><Button className="nav-link">Meu Perfil</Button></Link>
-          <Button className="nav-link" onClick={logoutUser}>Logout</Button>
+          <Button className="nav-link" onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </Box> :
