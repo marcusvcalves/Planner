@@ -31,22 +31,6 @@ export default function LoginForm() {
   let {handleLogin} = useContext(AuthContext)
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await axios.post('http://127.0.0.1:8000/api/login', {
-        email: email,
-        password: password,
-      });
-      // Add code to handle successful registration, redirect, etc.
-      setSuccess(true);
-    } catch (error) {
-      console.error('Registration error:', error);
-      // Add code to handle registration error
-    }
-  };
-
   const defaultTheme = createTheme();
 
   return (
