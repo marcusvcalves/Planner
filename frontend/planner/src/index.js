@@ -1,39 +1,45 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
+import { useContext } from 'react';
+
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
 import Home from './templates/home';
 import SignUp from './templates/sign_up';
 import Login from './templates/login';
 import ErrorPage from './templates/error_page';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
-import PrivateRoute from './utils/PrivateRoute'
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/sign_up",
-    element: <SignUp />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-    errorElement: <ErrorPage />,
-  },
-]);
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/sign_up" element={<SignUpOrRedirect />}/>
+          <Route path="/login" element={<LoginOrRedirect />}/>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
 
+function SignUpOrRedirect() {
+  const { user } = useAuth();
+  return user ? <Navigate to="/" /> : <SignUp />;
+}
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+function LoginOrRedirect() {
+  const { user } = useAuth();
+  return user ? <Navigate to="/" /> : <Login />;
+}
+
+const root = createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <App />
   </React.StrictMode>
 );
