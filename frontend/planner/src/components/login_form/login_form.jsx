@@ -15,12 +15,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState, useContext } from 'react';
 import axios from 'axios';
 
-import './login_form.css'
-import '../../css/global.css'
+import './login_form.css';
+import '../../css/global.css';
 
 import { Link } from "react-router-dom";
 
-import AuthContext from '../../context/AuthContext'
+import { AuthContext } from '../../context/AuthContext';
+
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
