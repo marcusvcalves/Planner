@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 
 import { useContext } from 'react';
-import AuthContext from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 import '../../css/global.css';
 import './navbar.css';
@@ -15,7 +15,7 @@ import './navbar.css';
 
 
 export default function ButtonAppBar() {
-  let {user, logoutUser} = useContext(AuthContext);
+  const {user, logoutUser} = useContext(AuthContext);
 
   return (
     <>
