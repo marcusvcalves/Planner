@@ -10,6 +10,7 @@ export const AuthProvider = ({children}) => {
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
     const refresh = () => window.location.reload(true);
     const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
     let handleLogin = async (e) => {
         e.preventDefault();
@@ -29,6 +30,10 @@ export const AuthProvider = ({children}) => {
             setUser(jwt_decode(data.access));
             localStorage.setItem('authTokens', JSON.stringify(data));
             navigate('/');
+        } else if (response.status === 401) {
+            setError('Email e/ou senha inválido(s)');
+        } else {
+            setError('Erro ao fazer login');
         }
     }
 
@@ -58,7 +63,8 @@ export const AuthProvider = ({children}) => {
     let contextData = {
         user:user,
         handleLogin:handleLogin,
-        handleLogout:handleLogout
+        handleLogout:handleLogout,
+        error:error
     }
 
     return (
