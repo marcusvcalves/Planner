@@ -30,21 +30,18 @@ class AppUserManager(BaseUserManager):
 
         return user
 
-    
-
 class Task(models.Model):
     time = models.TimeField(auto_now=False, auto_now_add=False, default='00:00')
-    monday_task = models.TextField(max_length=300)
-    tuesday_task = models.TextField(max_length=300)
-    wednesday_task = models.TextField(max_length=300)
-    thursday_task = models.TextField(max_length=300)
-    friday_task = models.TextField(max_length=300)
-    saturday_task = models.TextField(max_length=300)
-    sunday_task = models.TextField(max_length=300)
-
+    monday_task = models.TextField(max_length=300, blank=True)
+    tuesday_task = models.TextField(max_length=300, blank=True)
+    wednesday_task = models.TextField(max_length=300, blank=True)
+    thursday_task = models.TextField(max_length=300, blank=True)
+    friday_task = models.TextField(max_length=300, blank=True)
+    saturday_task = models.TextField(max_length=300, blank=True)
+    sunday_task = models.TextField(max_length=300, blank=True)
 
 class AppUser(AbstractBaseUser, PermissionsMixin):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
