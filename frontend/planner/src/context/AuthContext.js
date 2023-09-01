@@ -11,6 +11,7 @@ export const AuthProvider = ({children}) => {
     const refresh = () => window.location.reload(true);
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    
 
     let handleLogin = async (e) => {
         e.preventDefault();
@@ -30,7 +31,7 @@ export const AuthProvider = ({children}) => {
             setUser(jwt_decode(data.access));
             localStorage.setItem('authTokens', JSON.stringify(data));
             navigate('/');
-        } else if (response.status === 401) {
+        } else if (response.status === 400 || response.status === 401) {
             setError('Email e/ou senha inválido(s)');
         } else {
             setError('Erro ao fazer login');
