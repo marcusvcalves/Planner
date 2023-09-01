@@ -23,6 +23,7 @@ export default function SignUpForm() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleRegister = async (e) => {
@@ -34,6 +35,7 @@ export default function SignUpForm() {
         last_name: lastName,
         email: email,
         password: password,
+        confirm_password: confirmPassword
       });
       // Add code to handle successful registration, redirect, etc.
       setSuccess(true);
@@ -78,7 +80,7 @@ export default function SignUpForm() {
                   name="Nome"
                   label="Nome"
                   id="nome"
-                  autoComplete="nome"
+                  autoComplete="given-name"
                   autoFocus
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -91,7 +93,7 @@ export default function SignUpForm() {
                   name="Sobrenome"
                   label="Sobrenome"
                   id="sobrenome"
-                  autoComplete="sobrenome"
+                  autoComplete="additional-name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
@@ -116,9 +118,22 @@ export default function SignUpForm() {
                   label="Senha"
                   type="password"
                   id="password"
-                  autoComplete="nova-senha"
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Confirme a Senha"
+                  type="password"
+                  id="confirm-password"
+                  autoComplete="new-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -135,7 +150,7 @@ export default function SignUpForm() {
             </Button>
           </Box>
           <Box sx={{ mt: 3 }}>
-            <Grid container justifyContent="flex-end">
+            <Grid container sx={{flexDirection: 'column', alignItems: 'center'}}>
               <Grid item>
                 <Link to="/login" variant="body2">
                   Já possui uma conta? Faça login
