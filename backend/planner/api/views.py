@@ -2,13 +2,12 @@ from django.contrib.auth import get_user_model, login, logout
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
+from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, TaskSerializer
 from rest_framework import permissions, status
 from .validations import validate_email, validate_password, confirm_password
-
+from .models import Task
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -70,3 +69,13 @@ class UserView(APIView):
 	def get(self, request):
 		serializer = UserSerializer(request.user)
 		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+
+
+class TaskView(APIView):
+	serializer_class = TaskSerializer
+	permission_classes = [permissions.IsAuthenticated]
+
+	def get(self, request):
+		tasks = Task.objects.filter(user=request.user)
+		serializer = self.serializer_class(tasks, many=True)
+		return Response({'tasks': serializer.data})
