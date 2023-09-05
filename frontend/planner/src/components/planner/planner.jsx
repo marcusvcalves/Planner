@@ -8,16 +8,26 @@ import { useEffect, useState } from 'react';
 
 export default function Planner() {
 
-    const [tasks, setTasks ] = useState([]);
+    const [tasks, setTasks ] = useState(null);
 
-    useEffect(() =>{
-        fetch("http://127.0.0.1:8000/api/tasks/")
-            .then(res => {
-                return res.json();
+    useEffect(() => {
+        const authTokens = JSON.parse(localStorage.getItem('authTokens'));
+
+        if (authTokens && authTokens.access) {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${String(authTokens.access)}`
+            };
+    
+            fetch("http://127.0.0.1:8000/api/tasks/", {
+                method: 'GET',
+                headers: headers
             })
+            .then(res => res.json())
             .then(data => {
                 setTasks(data.tasks);
             })
+        } 
     }, []);
     
 return (
@@ -38,7 +48,7 @@ return (
                     <p>Domingo</p>
                 </div>
                 <div>
-                    <TaskList tasks={tasks} />
+                    {tasks && <TaskList tasks={tasks} />}
                 </div>
             </div>
         </section>
