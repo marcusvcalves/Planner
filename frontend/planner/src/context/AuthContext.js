@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ export const AuthProvider = ({children}) => {
 
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
+    let [loading, setLoading] = useState(true);
     const refresh = () => window.location.reload(true);
     const navigate = useNavigate();
     const [error, setError] = useState(null);
@@ -55,18 +56,31 @@ export const AuthProvider = ({children}) => {
         })
         let data = await response.json();
 
-        if (response.statusCode === 200) {
+        if (response.status === 200) {
             setAuthTokens(data);
             setUser(jwt_decode(data.access));
             localStorage.setItem('authTokens', JSON.stringify(data));
+        } else {
+            handleLogout();
         }
     }
+
     let contextData = {
         user:user,
         handleLogin:handleLogin,
         handleLogout:handleLogout,
         error:error
     }
+
+    useEffect(() => {
+        let fourMinutes = 1000 * 60 * 4
+        let interval = setInterval(() => {
+            if(authTokens){
+                updateToken();
+            }
+        }, fourMinutes)
+        return () => clearInterval(interval);
+    }, [authTokens, loading]);
 
     return (
         <AuthContext.Provider value={contextData}>
