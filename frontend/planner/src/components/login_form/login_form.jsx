@@ -14,7 +14,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 
 import { useState, useContext } from 'react';
-import axios from 'axios';
 
 import './login_form.css';
 import '../../css/global.css';
