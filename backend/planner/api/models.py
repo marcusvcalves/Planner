@@ -30,16 +30,6 @@ class AppUserManager(BaseUserManager):
 
         return user
 
-class Task(models.Model):
-    time = models.TimeField(auto_now=False, auto_now_add=False, default='00:00')
-    monday_task = models.TextField(max_length=300, blank=True)
-    tuesday_task = models.TextField(max_length=300, blank=True)
-    wednesday_task = models.TextField(max_length=300, blank=True)
-    thursday_task = models.TextField(max_length=300, blank=True)
-    friday_task = models.TextField(max_length=300, blank=True)
-    saturday_task = models.TextField(max_length=300, blank=True)
-    sunday_task = models.TextField(max_length=300, blank=True)
-
 class AppUser(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True, unique=True)
     first_name = models.CharField(max_length=50)
@@ -52,7 +42,7 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
+    
 
     class Meta:
         verbose_name = 'User'
@@ -65,3 +55,15 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.email
+    
+class Task(models.Model):
+    time = models.TimeField(auto_now=False, auto_now_add=False, default='00:00')
+    monday_task = models.TextField(max_length=300, blank=True)
+    tuesday_task = models.TextField(max_length=300, blank=True)
+    wednesday_task = models.TextField(max_length=300, blank=True)
+    thursday_task = models.TextField(max_length=300, blank=True)
+    friday_task = models.TextField(max_length=300, blank=True)
+    saturday_task = models.TextField(max_length=300, blank=True)
+    sunday_task = models.TextField(max_length=300, blank=True)
+
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, null=True, blank=True)
