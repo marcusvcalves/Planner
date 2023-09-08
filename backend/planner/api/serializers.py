@@ -19,23 +19,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         )
         return user_obj
     
-class UserLoginSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField()
-    password = serializers.CharField()
-
-    class Meta:
-        model = UserModel
-        fields = ('email', 'password')
-        
-    def check_user(self, validated_data):
-        user = authenticate(
-            username=validated_data['email'],
-            password=validated_data['password']
-        )
-        if not user:
-            raise ValidationError('Erro nas credenciais')
-        
-        return user
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,3 +29,19 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+
+class CreateTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ('time', 'user')
+
+    def create(self, validated_data):
+        # Obtenha o usuário autenticado do request (via JWT)
+        user = self.context['request'].user
+
+        task_obj = Task.objects.create(
+            time='00:00',
+            user=user
+        )
+
+        return task_obj
