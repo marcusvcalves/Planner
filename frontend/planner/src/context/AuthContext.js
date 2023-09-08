@@ -6,24 +6,24 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
 
-    let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
-    let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
+    const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
+    const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
     const [error, setError] = useState(null);
-    let [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     
     const navigate = useNavigate();
 
-    let handleLogin = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         
-        let response = await fetch('http://127.0.0.1:8000/api/token/', {
+        const response = await fetch('http://127.0.0.1:8000/api/token/', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
             },
             body: JSON.stringify({'email':  e.target.email.value, 'password': e.target.password.value})
         })
-        let data = await response.json();
+        const data = await response.json();
         
         
         if(response.status === 200){
@@ -38,15 +38,15 @@ export const AuthProvider = ({children}) => {
         }
     }
 
-    let handleLogout = async () => {
+    const handleLogout = async () => {
         setAuthTokens(null);
         setUser(null);
         localStorage.removeItem('authTokens');
         navigate('/login');
     }
 
-    let updateToken = async ()=> {
-        let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+    const updateToken = async ()=> {
+        const response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -54,7 +54,7 @@ export const AuthProvider = ({children}) => {
             body:JSON.stringify({'refresh':authTokens?.refresh})
         })
 
-        let data = await response.json()
+        const data = await response.json()
         
         if (response.status === 200){
             setAuthTokens(data)
@@ -68,7 +68,7 @@ export const AuthProvider = ({children}) => {
     }
     
 
-    let contextData = {
+    const contextData = {
         user:user,
         handleLogin:handleLogin,
         authTokens:authTokens,
@@ -82,9 +82,9 @@ export const AuthProvider = ({children}) => {
             updateToken()
         }
 
-        let fourMinutes = 1000 * 60 * 4
+        const fourMinutes = 1000 * 60 * 4
 
-        let interval =  setInterval(()=> {
+        const interval =  setInterval(()=> {
             if(authTokens){
                 updateToken()
             }

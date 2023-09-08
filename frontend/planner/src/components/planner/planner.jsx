@@ -2,6 +2,7 @@ import './planner.css';
 import './../../css/global.css';
 import Button from '@mui/material/Button';
 import { TaskList } from '../task_list/task_list';
+import { TaskHeader } from '../task_header/task_header';
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -39,7 +40,7 @@ export default function Planner() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${String(authTokens.access)}`,  // Adicione o token JWT como cabeçalho de autorização
+            'Authorization': `Bearer ${String(authTokens.access)}`,
           },
           body: JSON.stringify(taskData)
         })
@@ -48,7 +49,7 @@ export default function Planner() {
 
     useEffect(() => {
         GetTasks();
-        
+
         return () => setTasksUpdated(false);
     }, [authTokens, tasksUpdated]);
     
@@ -59,15 +60,8 @@ return (
                 <Button variant='contained' className='task-button'>Limpar Tarefas</Button>
             </div>
             <div className='planner'>
-                <div className='columns'>
-                    <p className='purple'>Horários</p>
-                    <p>Segunda</p>
-                    <p>Terça</p>
-                    <p>Quarta</p>
-                    <p>Quinta</p>
-                    <p>Sexta</p>
-                    <p>Sábado</p>
-                    <p>Domingo</p>
+                <div>
+                    <TaskHeader />
                 </div>
                 <div>
                     {tasks && <TaskList tasks={tasks} />}

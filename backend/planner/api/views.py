@@ -51,11 +51,9 @@ class CreateTaskView(APIView):
 	permission_classes = [permissions.IsAuthenticated]
 
 	def post(self, request):
-        # Serialize os dados recebidos na requisição
 		serializer = CreateTaskSerializer(data=request.data, context={'request': request})
 		
 		if serializer.is_valid():
-			# Crie a tarefa usando o serializer
 			serializer.save()
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

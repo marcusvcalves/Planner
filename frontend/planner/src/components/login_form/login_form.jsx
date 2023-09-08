@@ -26,10 +26,9 @@ import { AuthContext } from '../../context/AuthContext';
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [success, setSuccess] = useState(false);
-  let {user} = useContext(AuthContext)
-  let {handleLogin} = useContext(AuthContext)
+  const {handleLogin} = useContext(AuthContext)
   const { error, setError } = useContext(AuthContext);
+
   const defaultTheme = createTheme();
 
   useEffect(() => {

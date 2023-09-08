@@ -36,7 +36,6 @@ class CreateTaskSerializer(serializers.ModelSerializer):
         fields = ('time', 'user')
 
     def create(self, validated_data):
-        # Obtenha o usuário autenticado do request (via JWT)
         user = self.context['request'].user
 
         task_obj = Task.objects.create(
