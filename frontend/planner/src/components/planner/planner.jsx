@@ -2,17 +2,17 @@ import './planner.css';
 import './../../css/global.css';
 import Button from '@mui/material/Button';
 import { TaskList } from '../task_list/task_list';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 
 
 export default function Planner() {
 
     const [tasks, setTasks ] = useState(null);
+    const { authTokens } = useContext(AuthContext);
 
     useEffect(() => {
-        const authTokens = JSON.parse(localStorage.getItem('authTokens'));
-
         if (authTokens && authTokens.access) {
             const headers = {
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export default function Planner() {
                 setTasks(data.tasks);
             })
         } 
-    }, []);
+    }, [authTokens]);
     
 return (
         <section className='planner-container'>
