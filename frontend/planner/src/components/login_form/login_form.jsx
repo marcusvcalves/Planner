@@ -85,10 +85,8 @@ export default function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Lembre-se de mim"
-            />
+            <Grid item xs={12}>
+            </Grid>
             <Button
               id='btn'
               type="submit"
