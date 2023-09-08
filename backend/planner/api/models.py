@@ -66,4 +66,4 @@ class Task(models.Model):
     saturday_task = models.TextField(max_length=300, blank=True)
     sunday_task = models.TextField(max_length=300, blank=True)
 
-    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, null=False, blank=False)
