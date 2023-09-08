@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import './login_form.css';
 import '../../css/global.css';
@@ -21,7 +21,6 @@ import '../../css/global.css';
 import { Link } from "react-router-dom";
 
 import { AuthContext } from '../../context/AuthContext';
-import { useAuth } from '../../context/AuthContext';
 
 
 export default function LoginForm() {
@@ -30,8 +29,14 @@ export default function LoginForm() {
   const [success, setSuccess] = useState(false);
   let {user} = useContext(AuthContext)
   let {handleLogin} = useContext(AuthContext)
-  const { error } = useAuth();
+  const { error, setError } = useContext(AuthContext);
   const defaultTheme = createTheme();
+
+  useEffect(() => {
+    return () => {
+      setError(null);
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
