@@ -3,7 +3,7 @@ export const TaskList = ({ tasks }) => {
         <div className="task-list">
             {tasks.map(task => (
                 <div className="columns" key={task.id}>
-                    <p className="purple">{task.time}</p>
+                    <p className="purple">{task.time.split(':').slice(0, 2).join(':')}</p>
                     <p>{task.monday_task}</p>
                     <p>{task.tuesday_task}</p>
                     <p>{task.wednesday_task}</p>
