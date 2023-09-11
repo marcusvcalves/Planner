@@ -47,6 +47,21 @@ export default function Planner() {
         .then(() => setTasksUpdated(true));
       }
 
+    const UpdateTask = (taskId, updatedData, userId) => {
+        const body = JSON.stringify({ ...updatedData, user: userId })
+        return fetch(`http://127.0.0.1:8000/api/task/update/${taskId}/`, {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${String(authTokens.access)}`,
+            },
+            body: body,
+            })
+        .then(response => {
+            setTasksUpdated(true)
+            return response.json();
+        });
+    };
     useEffect(() => {
         GetTasks();
 
@@ -64,7 +79,7 @@ return (
                     <TaskHeader />
                 </div>
                 <div>
-                    {tasks && <TaskList tasks={tasks} />}
+                    {tasks && <TaskList tasks={tasks} UpdateTask={UpdateTask}/>}
                 </div>
             </div>
         </section>
