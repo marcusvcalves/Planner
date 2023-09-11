@@ -1,4 +1,4 @@
-import './planner.css';
+    import './planner.css';
 import './../../css/global.css';
 import Button from '@mui/material/Button';
 import { TaskList } from '../task_list/task_list';
@@ -36,7 +36,7 @@ export default function Planner() {
             user: user.user_id, 
           };
 
-        fetch('http://127.0.0.1:8000/api/task/create/', {
+        fetch('http://127.0.0.1:8000/api/tasks/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -47,21 +47,30 @@ export default function Planner() {
         .then(() => setTasksUpdated(true));
       }
 
-    const UpdateTask = (taskId, updatedData, userId) => {
+    const UpdateTask = async (taskId, updatedData, userId) => {
         const body = JSON.stringify({ ...updatedData, user: userId })
-        return fetch(`http://127.0.0.1:8000/api/task/update/${taskId}/`, {
+        const response = await fetch(`http://127.0.0.1:8000/api/task/update/${taskId}/`, {
             method: 'PUT',
             headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${String(authTokens.access)}`,
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${String(authTokens.access)}`,
             },
             body: body,
-            })
-        .then(response => {
-            setTasksUpdated(true)
-            return response.json();
         });
+        setTasksUpdated(true);
+        return await response.json();
     };
+    const DeleteTask = async (taskId) => {
+        await fetch(`http://127.0.0.1:8000/api/task/delete/${taskId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${String(authTokens.access)}`,
+            },
+        });
+        setTasksUpdated(true);
+    };
+
     useEffect(() => {
         GetTasks();
 
@@ -72,14 +81,13 @@ return (
         <section className='planner-container'>
             <div className='buttons'>
                 <Button variant='contained' className='task-button' onClick={CreateTask}>Nova Tarefa</Button>
-                <Button variant='contained' className='task-button'>Limpar Tarefas</Button>
             </div>
             <div className='planner'>
                 <div>
                     <TaskHeader />
                 </div>
                 <div>
-                    {tasks && <TaskList tasks={tasks} UpdateTask={UpdateTask}/>}
+                    {tasks && <TaskList tasks={tasks} UpdateTask={UpdateTask} DeleteTask={DeleteTask}/>}
                 </div>
             </div>
         </section>
