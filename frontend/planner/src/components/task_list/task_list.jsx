@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import CloseIcon from '@mui/icons-material/Close';
 
-export const TaskList = ({ tasks, UpdateTask }) => {
+export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
     const [editableTaskId, setEditableTaskId] = useState(null);
     const user = useContext(AuthContext);
   
@@ -27,6 +28,7 @@ export const TaskList = ({ tasks, UpdateTask }) => {
                 suppressContentEditableWarning={true}
             >
               {task.time.split(':').slice(0, 2).join(':')}
+              <CloseIcon fontSize="small" onClick={() => DeleteTask(task.id)}></CloseIcon>
             </p>
             <p
                 className={`${editableTaskId === task.id ? 'editable' : ''}`}
