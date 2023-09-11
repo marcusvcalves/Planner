@@ -38,7 +38,6 @@ class UserRegister(APIView):
 		return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class TaskView(APIView):
 	permission_classes = [permissions.IsAuthenticated]
 
@@ -46,11 +45,7 @@ class TaskView(APIView):
 		tasks = Task.objects.filter(user=request.user).order_by('time')
 		serializer = TaskSerializer(tasks, many=True)
 		return Response({'tasks': serializer.data})
-
-
-class CreateTaskView(APIView):
-	permission_classes = [permissions.IsAuthenticated]
-
+	
 	def post(self, request):
 		serializer = CreateTaskSerializer(data=request.data, context={'request': request})
 		
@@ -75,3 +70,11 @@ class UpdateTaskView(APIView):
 			serializer.save()
 			return Response(serializer.data)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	
+class DeleteTaskView(APIView):
+	permission_classes = [permissions.IsAuthenticated]
+
+	def delete(self, request, pk):
+		task = Task.objects.get(pk=pk)
+		task.delete()
+		return Response(status=status.HTTP_204_NO_CONTENT)
