@@ -28,7 +28,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
                 suppressContentEditableWarning={true}
             >
               {task.time.split(':').slice(0, 2).join(':')}
-              <CloseIcon fontSize="small" onClick={() => DeleteTask(task.id)}></CloseIcon>
+              <CloseIcon style={{ fontSize: "0.9em" }} onClick={() => DeleteTask(task.id)}></CloseIcon>
             </p>
             <p
                 className={`${editableTaskId === task.id ? 'editable' : ''}`}
