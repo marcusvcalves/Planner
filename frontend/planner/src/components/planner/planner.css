@@ -5,6 +5,11 @@
     justify-content: center;
     padding-top: 50px;
 }
+@media (max-width: 1460px) {
+    .planner-container {
+      align-items: normal;
+    }
+  }
 .buttons {
     width: 75vw;
     display: flex;
@@ -19,6 +24,8 @@
     background-color: var(--white-color);
     border-radius: 1px;
     z-index: 2;
+    min-width: 1090px;
+    min-height: 450px;
 }
 
 .columns {
@@ -70,3 +77,7 @@
     border-right: none;
 }
 
+.task-item{
+    min-width: 8vw;
+    word-wrap: break-word;
+}
