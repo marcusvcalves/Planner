@@ -80,7 +80,7 @@ export default function Planner() {
 return (
         <section className='planner-container'>
             <div className='buttons'>
-                <Button variant='contained' className='task-button' onClick={CreateTask}>Nova Tarefa</Button>
+                <Button variant='contained' className='task-button' onClick={CreateTask}>Novo Horário</Button>
             </div>
             <div className='planner'>
                 <div>
