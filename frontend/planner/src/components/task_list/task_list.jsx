@@ -21,7 +21,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
         {tasks.map(task => (
           <div className="columns" key={task.id}>
             <p  
-                className={`purple ${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`purple task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'time', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
@@ -31,7 +31,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
               <CloseIcon style={{ fontSize: "0.9em" }} onClick={() => DeleteTask(task.id)}></CloseIcon>
             </p>
             <p
-                className={`${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'monday_task', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
@@ -40,7 +40,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
                 {task.monday_task}
             </p>
             <p
-                className={`${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'tuesday_task', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
@@ -49,7 +49,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
                 {task.tuesday_task}
             </p>
             <p
-                className={`${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'wednesday_task', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
@@ -58,7 +58,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
                 {task.wednesday_task}
             </p>
             <p
-                className={`${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'thursday_task', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
@@ -67,7 +67,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
                 {task.thursday_task}
             </p>
             <p
-                className={`${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'friday_task', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
@@ -76,7 +76,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
                 {task.friday_task}
             </p>
             <p
-                className={`${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'saturday_task', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
@@ -85,7 +85,7 @@ export const TaskList = ({ tasks, UpdateTask, DeleteTask }) => {
                 {task.saturday_task}
             </p>
             <p
-                className={`${editableTaskId === task.id ? 'editable' : ''}`}
+                className={`task-item ${editableTaskId === task.id ? 'editable' : ''}`}
                 onClick={() => handleTaskClick(task.id)}
                 onBlur={(e) => handleTaskBlur(task.id, 'sunday_task', e.target.textContent)}
                 contentEditable={editableTaskId === task.id}
