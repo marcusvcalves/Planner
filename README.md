@@ -9,7 +9,7 @@
 
 
 ### Imagem:
-![alt text](https://github.com/marcusvcalves/Django_React_Planner/blob/main/app_img.png)
+![Imagem Planner](https://github.com/marcusvcalves/Django_React_Planner/blob/main/app_img.png)
 
 ### Vídeo:
 
