@@ -1,4 +1,4 @@
-Planner
+# Planner
 
 #### Projeto utilizando Django no back-end e React no front-end com JWT para autenticação
 ### O que foi utilizado:
