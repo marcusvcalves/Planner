@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../../api/axios';
 
 import './sign_up_form.css'
 import '../../css/global.css'
@@ -25,12 +25,13 @@ export default function SignUpForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [success, setSuccess] = useState(false);
+  const url = "localhost";
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post('http://127.0.0.1:8000/api/register', {
+      await axios.post(`/api/register`, {
         first_name: firstName,
         last_name: lastName,
         email: email,

@@ -25,7 +25,6 @@ export default function ButtonAppBar() {
         <Toolbar>
           <Link to="/"><Button className="nav-link">Home</Button></Link>
           <Box sx={{ flexGrow: 1 }} />
-          <Link to="/"><Button className="nav-link">Meu Perfil</Button></Link>
           <Button className="nav-link" onClick={handleLogout}>Logout</Button>
         </Toolbar>
       </AppBar>

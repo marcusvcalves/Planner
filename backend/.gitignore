@@ -1,6 +1,0 @@
-*.cfg
-env
-*.sqlite3
-__pycache__
-.env
-migrations/

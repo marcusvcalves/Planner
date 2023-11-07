@@ -1,6 +1,5 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { useContext } from 'react';
 
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
