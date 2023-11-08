@@ -25,7 +25,6 @@ export default function SignUpForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [success, setSuccess] = useState(false);
-  const url = "localhost";
 
   const handleRegister = async (e) => {
     e.preventDefault();

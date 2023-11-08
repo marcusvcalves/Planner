@@ -10,8 +10,6 @@ import axios from '../../api/axios'
 
 export default function Planner() {
 
-    const url = 'localhost';
-
     const [tasks, setTasks ] = useState(null);
     const [tasksUpdated, setTasksUpdated] = useState(false);
     const { user, authTokens } = useContext(AuthContext);
