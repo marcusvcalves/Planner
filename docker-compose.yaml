@@ -1,11 +1,13 @@
 version: '3.8'
 services:
   django-backend:
+    image: marcusvcalves/planner-django-backend
     build:
       ./backend
     ports:
       - '8000:8000'
   react-frontend:
+    image: marcusvcalves/planner-react-frontend
     build:
       ./frontend
     ports:
