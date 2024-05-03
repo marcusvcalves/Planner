@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-RUN cd planner && python3 manage.py makemigrations
+RUN cd planner && python3 manage.py makemigrations && python3 manage.py migrate
 
 EXPOSE 8000
 
