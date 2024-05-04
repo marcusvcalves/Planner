@@ -10,7 +10,6 @@ def validate_email(data):
         raise ValidationError('É necessário inserir um email')
     return True
 
-
 def validate_password(data):
     password = data['password'].strip()
     if not password:

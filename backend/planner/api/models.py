@@ -36,13 +36,11 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
 
-    is_active = models.BooleanField(default=True)  # Required for AbstractBaseUser
-    is_staff = models.BooleanField(default=False)  # Required for superuser
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-    
-    
+    REQUIRED_FIELDS = [] 
 
     class Meta:
         verbose_name = 'User'
