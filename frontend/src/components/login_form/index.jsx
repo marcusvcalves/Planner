@@ -22,21 +22,20 @@ import { AuthContext } from '../../contexts/AuthContext';
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { handleLogin } = useContext(AuthContext)
-  const { error, setError } = useContext(AuthContext);
+  const { handleLogin, loginError, setLoginError } = useContext(AuthContext)
 
   const defaultTheme = createTheme();
 
   useEffect(() => {
     return () => {
-      setError(null);
+      setLoginError(null);
     }
-  });
+  }, [setLoginError]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container className='login_container' component="main" maxWidth="xs">
-        {error && <Alert severity="error">{error}</Alert>}
+      <Container className="login-container" component="main" maxWidth="xs">
+        {loginError && <Alert severity="error">{loginError}</Alert>}
         <CssBaseline />
         <Box
           sx={{
@@ -83,7 +82,7 @@ export default function LoginForm() {
               <Grid item xs={12}>
               </Grid>
               <Button
-                id='btn'
+                id="btn"
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -92,7 +91,7 @@ export default function LoginForm() {
                 Login
               </Button>
             </Grid>
-            <Grid container sx={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Grid container sx={{ flexDirection: "column", alignItems: "center" }}>
               <Grid item>
                 <Link to="/sign_up" variant="body2">
                   {"Não tem uma conta? Cadastre-se"}

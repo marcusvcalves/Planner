@@ -33,8 +33,8 @@ export default function SignUpForm() {
       await axios.post(`/api/register`, {
         first_name: firstName,
         last_name: lastName,
-        email: email,
-        password: password,
+        email,
+        password,
         confirm_password: confirmPassword
       });
       setSuccess(true);

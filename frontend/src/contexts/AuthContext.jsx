@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
-    const [error, setError] = useState(null);
+    const [loginError, setLoginError] = useState(null);
     const [loading, setLoading] = useState(true)
 
     const navigate = useNavigate();
@@ -35,14 +35,14 @@ export const AuthProvider = ({ children }) => {
                 setUser(jwt_decode(data.access));
                 localStorage.setItem('authTokens', JSON.stringify(data));
                 navigate('/');
-            } else if (response.status === 400 || response.status === 401) {
-                setError('Email e/ou senha inválido(s)');
-            } else {
-                setError('Erro ao fazer login');
             }
+
         } catch (error) {
-            console.error('Erro na requisição:', error);
-            setError('Erro ao fazer login');
+            if (error.response.status === 400 || error.response.status === 401) {
+                setLoginError('Email e/ou senha inválido(s)');
+            } else {
+                setLoginError('Erro ao fazer login');
+            }
         }
     };
 
@@ -103,8 +103,8 @@ export const AuthProvider = ({ children }) => {
         authTokens,
         handleLogin,
         handleLogout,
-        error,
-        setError
+        loginError,
+        setLoginError
     }
 
     return (
