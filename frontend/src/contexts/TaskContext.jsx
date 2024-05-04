@@ -82,7 +82,7 @@ export const TaskProvider = ({ children }) => {
         };
 
         try {
-          const response = await axios.get(`/api/taskss/`, {
+          const response = await axios.get(`/api/tasks/`, {
             headers: headers
           });
 
