@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, login, logout
+from django.core.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserRegisterSerializer, TaskSerializer, CreateTaskSerializer
@@ -13,11 +13,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        # Add custom claims
         token['first_name'] = user.first_name
         token['last_name'] = user.last_name
         token['email'] = user.email
-        # ...
 
         return token
     
@@ -30,7 +28,12 @@ class UserRegister(APIView):
 	def post(self, request):
 		data = request.data
 		serializer = UserRegisterSerializer(data=data)
-		assert confirm_password(data)
+
+		try:
+			confirm_password(data)
+		except ValidationError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 		if serializer.is_valid(raise_exception=True):
 			user = serializer.create(serializer.validated_data)
 			if user:
