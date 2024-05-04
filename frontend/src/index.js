@@ -8,20 +8,23 @@ import SignUp from './templates/sign_up';
 import Login from './templates/login';
 import ErrorPage from './templates/error_page';
 
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { TaskProvider } from './contexts/TaskContext';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="*" element={<ErrorPage />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/sign_up" element={<SignUpOrRedirect />}/>
-          <Route path="/login" element={<LoginOrRedirect />}/>
-        </Routes>
+        <TaskProvider>
+          <Routes>
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/sign_up" element={<SignUpOrRedirect />} />
+            <Route path="/login" element={<LoginOrRedirect />} />
+          </Routes>
+        </TaskProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 }
 

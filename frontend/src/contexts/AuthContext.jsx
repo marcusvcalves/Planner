@@ -6,18 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
 
     const [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null);
     const [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true)
-    
+
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
-    
+
         try {
             const response = await axios.post(`/api/token/`, {
                 email: e.target.email.value,
@@ -27,9 +27,9 @@ export const AuthProvider = ({children}) => {
                     'Content-Type': 'application/json',
                 },
             });
-    
+
             const data = response.data;
-    
+
             if (response.status === 200) {
                 setAuthTokens(data);
                 setUser(jwt_decode(data.access));
@@ -53,58 +53,59 @@ export const AuthProvider = ({children}) => {
         navigate('/login');
     }
 
-    const updateToken = async () => {
-        try {
-            const response = await axios.post(`/api/token/refresh/`, {
-                refresh: authTokens?.refresh,
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-    
-            const data = response.data;
-    
-            if (response.status === 200) {
-                setAuthTokens(data);
-                setUser(jwt_decode(data.access));
-                localStorage.setItem('authTokens', JSON.stringify(data));
-            }
-        } catch (error) {
-            console.error('Erro na requisição:', error);
-            
-        } finally {
-            if (loading) {
-                setLoading(false);
-            }
-        }
-    };
-    
+    useEffect(() => {
+        const updateToken = async () => {
+            try {
+                if (authTokens) {
+                    const response = await axios.post(`/api/token/refresh/`, {
+                        refresh: authTokens?.refresh,
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
 
-    const contextData = {
-        user:user,
-        handleLogin:handleLogin,
-        authTokens:authTokens,
-        handleLogout:handleLogout,
-        error:error,
-        setError:setError
-    }
+                    const data = response.data;
 
-    useEffect(()=> {
-        if(loading){
+                    if (response.status === 200) {
+                        setAuthTokens(data);
+                        setUser(jwt_decode(data.access));
+                        localStorage.setItem('authTokens', JSON.stringify(data));
+                    }
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+            } finally {
+                if (loading) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        if (loading) {
             updateToken()
         }
 
         const fourMinutes = 1000 * 60 * 4
 
-        const interval =  setInterval(()=> {
-            if(authTokens){
+        const interval = setInterval(() => {
+            if (authTokens) {
                 updateToken()
             }
         }, fourMinutes)
-        return ()=> clearInterval(interval)
+        return () => clearInterval(interval)
 
-    }, [authTokens, loading])
+    }, [authTokens, loading]);
+
+
+    const contextData = {
+        user,
+        authTokens,
+        handleLogin,
+        handleLogout,
+        error,
+        setError
+    }
 
     return (
         <AuthContext.Provider value={contextData}>
@@ -113,7 +114,7 @@ export const AuthProvider = ({children}) => {
     )
 }
 
-export function useAuth() {
+export const useAuth = () => {
     return useContext(AuthContext);
-  }
+}
 
